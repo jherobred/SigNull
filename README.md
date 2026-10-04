@@ -1,11 +1,23 @@
+<p align="center">
+  <img src="docs/images/hero.webp" alt="SigNull?: find the signal, map the dead zones, know the best spot in every room" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://github.com/jherobred/SigNull/actions/workflows/ci.yml"><img src="https://github.com/jherobred/SigNull/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/jherobred/SigNull/releases/latest"><img src="https://img.shields.io/github/v/release/jherobred/SigNull" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
+  <img src="https://img.shields.io/badge/Android-10%2B-3DDC84.svg" alt="Android 10+">
+</p>
+
 # SigNull?
 
 **Find the signal. Map the dead zones.** An Android app that shows your exact mobile and Wi‑Fi signal strength, tells you how to hold your phone for the strongest signal, and builds a room-by-room signal map as you explore. It works offline.
 
-[![CI](https://github.com/jherobred/SigNull/actions/workflows/ci.yml/badge.svg)](https://github.com/jherobred/SigNull/actions/workflows/ci.yml)
-[![Latest release](https://img.shields.io/github/v/release/jherobred/SigNull)](https://github.com/jherobred/SigNull/releases/latest)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-![Android 10+](https://img.shields.io/badge/Android-10%2B-3DDC84.svg)
+<p align="center">
+  <a href="docs/media/signull.mp4"><img src="docs/media/signull-teaser.webp" alt="SigNull? in motion: the logo, then floors and buildings in 3D" width="720"></a>
+  <br>
+  <sub><a href="docs/media/signull.mp4">Watch the 45-second video</a></sub>
+</p>
 
 <p>
   <img src="app/src/test/screenshots/02_live_cellular.png" width="19%" alt="Live signal" />
@@ -22,11 +34,11 @@
   <img src="app/src/test/screenshots/16_setup.png" width="19%" alt="First-run setup" />
 </p>
 
-## Why
+<img src="docs/images/section-why.webp" alt="Why" width="100%">
 
 Signal changes from room to room and even with how you hold your phone. When your laptop runs on your phone's hotspot, a few dB decide whether a video call works. SigNull? replaces guesswork with numbers.
 
-## Features
+<img src="docs/images/section-features.webp" alt="Features" width="100%">
 
 - **Exact signal.** Live RSRP, RSRQ, SINR and RSSI for 4G/5G (RSCP for 3G, RSSI for 2G) from the SIM that carries mobile data, plus Wi‑Fi RSSI, band, channel and link speed. Shows the serving band, cell PCI and approximate tower distance when Android exposes them.
 - **Best angle finder.** Turn around once while holding the phone upright, flat and sideways. SigNull? bins readings by compass direction and pose, picks the strongest one, then guides you back to it with live "turn right 40°" prompts and haptics.
@@ -49,7 +61,7 @@ Signal measuring, maps and the angle finder work without internet. SigNull? conn
 | `tiles.openfreemap.org` | Street map tiles | Don't open the street map, or save an area for offline use while connected |
 | `api.github.com`, `github.com` | Checking for and downloading updates | Turn off **Settings › Check automatically** |
 
-## How it works
+<img src="docs/images/section-how-it-works.webp" alt="How it works" width="100%">
 
 | Piece | Implementation |
 | --- | --- |
@@ -73,7 +85,7 @@ Signal measuring, maps and the angle finder work without internet. SigNull? conn
 - While your hotspot is on, most phones turn off Wi‑Fi scanning, so measure Wi‑Fi separately.
 - Step counting is approximate. Drag your dot to correct drift.
 
-## Install
+<img src="docs/images/section-install.webp" alt="Install" width="100%">
 
 Download `SigNull-vX.Y.Z.apk` from the [latest release](https://github.com/jherobred/SigNull/releases/latest) and open it on your phone. Android asks you to allow installs from your browser or file manager the first time. After that, SigNull? updates itself from new releases.
 
@@ -108,7 +120,7 @@ Screenshot tests render every screen on the JVM with Robolectric and Roborazzi. 
 ./gradlew recordRoborazziDebug
 ```
 
-## Contributing
+<img src="docs/images/section-contributing.webp" alt="Contributing" width="100%">
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Good first areas: carrier band tables, more languages, floor-plan photo backgrounds, and export/import of maps.
 

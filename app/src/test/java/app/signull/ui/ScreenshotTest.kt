@@ -1,15 +1,29 @@
 package app.signull.ui
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.unit.dp
+import app.signull.R
 import app.signull.core.angle.AngleResult
 import app.signull.core.angle.AngleTarget
 import app.signull.core.angle.SweepCell
@@ -518,5 +532,31 @@ class ScreenshotTest {
 
     @Test fun building3d() = shoot("22_building_3d_dark", dark = true, settle = true) {
         BuildingViewScreen(buildingUi, onBack = {}, onOpenFloor = {})
+    }
+
+    /** Launchers show the middle 72 of the icon's 108 units, here through a circle mask. */
+    @Test fun appIcon() = shoot("23_app_icon_dark", dark = true) {
+        Row(
+            Modifier.padding(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+        ) {
+            Box(Modifier.size(140.dp).clip(CircleShape), contentAlignment = androidx.compose.ui.Alignment.Center) {
+                Image(painterResource(R.drawable.ic_launcher_background), null, Modifier.requiredSize(210.dp))
+                Image(painterResource(R.drawable.ic_launcher_foreground), null, Modifier.requiredSize(210.dp))
+            }
+            Box(
+                Modifier.size(140.dp).clip(CircleShape).background(Color(0xFFD3E3FD)),
+                contentAlignment = androidx.compose.ui.Alignment.Center,
+            ) {
+                Image(
+                    painterResource(R.drawable.ic_launcher_monochrome),
+                    null,
+                    Modifier.requiredSize(210.dp),
+                    colorFilter = ColorFilter.tint(Color(0xFF0B57D0)),
+                )
+            }
+            Image(painterResource(R.drawable.ic_stat_signull), null, Modifier.size(48.dp))
+        }
     }
 }
