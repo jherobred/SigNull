@@ -1,0 +1,29 @@
+name: Bug report
+description: Something is broken or shows the wrong signal.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what you saw instead.
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Phone model and Android version
+      placeholder: Pixel 8, Android 16
+    validations:
+      required: true
+  - type: input
+    id: network
+    attributes:
+      label: Carrier and network type
+      description: Shown at the top of the Signal screen.
+      placeholder: Smart, 4G LTE, B28
+  - type: textarea
+    id: logs
+    attributes:
+      label: Screenshots or logcat
+      description: Optional. Remove anything personal first.

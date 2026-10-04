@@ -1,0 +1,482 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "5b437e01e24d93ed34f69159e8452d34",
+    "entities": [
+      {
+        "tableName": "buildings",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `latitude` REAL, `longitude` REAL, `createdAt` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "floors",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `buildingId` INTEGER NOT NULL, `name` TEXT NOT NULL, `level` INTEGER NOT NULL, `northOffsetDeg` REAL NOT NULL, `createdAt` INTEGER NOT NULL, `outline` TEXT, `outlineSource` TEXT, `ceilingM` REAL, FOREIGN KEY(`buildingId`) REFERENCES `buildings`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "buildingId",
+            "columnName": "buildingId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "level",
+            "columnName": "level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "northOffsetDeg",
+            "columnName": "northOffsetDeg",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "outline",
+            "columnName": "outline",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "outlineSource",
+            "columnName": "outlineSource",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ceilingM",
+            "columnName": "ceilingM",
+            "affinity": "REAL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_floors_buildingId",
+            "unique": false,
+            "columnNames": [
+              "buildingId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_floors_buildingId` ON `${TABLE_NAME}` (`buildingId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "buildings",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "buildingId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "areas",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `floorId` INTEGER NOT NULL, `name` TEXT NOT NULL, `minX` REAL NOT NULL, `minY` REAL NOT NULL, `maxX` REAL NOT NULL, `maxY` REAL NOT NULL, `createdAt` INTEGER NOT NULL, FOREIGN KEY(`floorId`) REFERENCES `floors`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "floorId",
+            "columnName": "floorId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minX",
+            "columnName": "minX",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minY",
+            "columnName": "minY",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maxX",
+            "columnName": "maxX",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maxY",
+            "columnName": "maxY",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_areas_floorId",
+            "unique": false,
+            "columnNames": [
+              "floorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_areas_floorId` ON `${TABLE_NAME}` (`floorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "floors",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "floorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "spots",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `floorId` INTEGER NOT NULL, `name` TEXT NOT NULL, `x` REAL NOT NULL, `y` REAL NOT NULL, `createdAt` INTEGER NOT NULL, FOREIGN KEY(`floorId`) REFERENCES `floors`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "floorId",
+            "columnName": "floorId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "x",
+            "columnName": "x",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "y",
+            "columnName": "y",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_spots_floorId",
+            "unique": false,
+            "columnNames": [
+              "floorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_spots_floorId` ON `${TABLE_NAME}` (`floorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "floors",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "floorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "measurements",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `spotId` INTEGER NOT NULL, `takenAt` INTEGER NOT NULL, `cellKind` TEXT, `cellTech` TEXT, `cellDbm` INTEGER, `cellRsrq` INTEGER, `cellSinr` REAL, `cellNrDbm` INTEGER, `cellOperator` TEXT, `cellBand` TEXT, `cellPci` INTEGER, `wifiRssi` INTEGER, `wifiSsid` TEXT, `wifiBssid` TEXT, `wifiFreqMhz` INTEGER, `wifiLinkMbps` INTEGER, `bestSource` TEXT, `bestPose` TEXT, `bestHeadingDeg` REAL, `bestDbm` INTEGER, `worstDbm` INTEGER, `latitude` REAL, `longitude` REAL, `accuracyM` REAL, `altitudeM` REAL, `pressureHpa` REAL, `interference` INTEGER NOT NULL DEFAULT 0, `magneticUt` REAL, FOREIGN KEY(`spotId`) REFERENCES `spots`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "spotId",
+            "columnName": "spotId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "takenAt",
+            "columnName": "takenAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cellKind",
+            "columnName": "cellKind",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "cellTech",
+            "columnName": "cellTech",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "cellDbm",
+            "columnName": "cellDbm",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "cellRsrq",
+            "columnName": "cellRsrq",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "cellSinr",
+            "columnName": "cellSinr",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "cellNrDbm",
+            "columnName": "cellNrDbm",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "cellOperator",
+            "columnName": "cellOperator",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "cellBand",
+            "columnName": "cellBand",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "cellPci",
+            "columnName": "cellPci",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "wifiRssi",
+            "columnName": "wifiRssi",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "wifiSsid",
+            "columnName": "wifiSsid",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "wifiBssid",
+            "columnName": "wifiBssid",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "wifiFreqMhz",
+            "columnName": "wifiFreqMhz",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "wifiLinkMbps",
+            "columnName": "wifiLinkMbps",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "bestSource",
+            "columnName": "bestSource",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bestPose",
+            "columnName": "bestPose",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bestHeadingDeg",
+            "columnName": "bestHeadingDeg",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "bestDbm",
+            "columnName": "bestDbm",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "worstDbm",
+            "columnName": "worstDbm",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "accuracyM",
+            "columnName": "accuracyM",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "altitudeM",
+            "columnName": "altitudeM",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "pressureHpa",
+            "columnName": "pressureHpa",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "interference",
+            "columnName": "interference",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "magneticUt",
+            "columnName": "magneticUt",
+            "affinity": "REAL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_measurements_spotId",
+            "unique": false,
+            "columnNames": [
+              "spotId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_measurements_spotId` ON `${TABLE_NAME}` (`spotId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "spots",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "spotId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5b437e01e24d93ed34f69159e8452d34')"
+    ]
+  }
+}

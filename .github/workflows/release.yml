@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Check the tag matches versionName
+        run: |
+          version=$(sed -n 's/.*versionName = "\(.*\)".*/\1/p' app/build.gradle.kts)
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match versionName $version"
+            exit 1
+          fi
+
+      - name: Build the signed APK
+        env:
+          KEYSTORE_BASE64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ] || [ -z "$STORE_PASSWORD" ] || [ -z "$KEY_ALIAS" ] || [ -z "$KEY_PASSWORD" ]; then
+            echo "::error::Signing secrets are missing, so the APK could not update installed copies"
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+          chmod +x gradlew
+          ./gradlew testDebugUnitTest assembleRelease \
+            -Psignull.keystore="$RUNNER_TEMP/release.jks" \
+            -Psignull.storePassword="$STORE_PASSWORD" \
+            -Psignull.keyAlias="$KEY_ALIAS" \
+            -Psignull.keyPassword="$KEY_PASSWORD"
+          rm "$RUNNER_TEMP/release.jks"
+
+      - name: Verify the signature
+        shell: bash
+        env:
+          # SHA-256 of the release signing certificate. Installed copies only accept updates signed with it.
+          RELEASE_CERT_SHA256: 80bb3023658e6691af9ec593676c54bfb74ca8ae4e47a185bef530c9b93f4e19
+        run: |
+          apksigner="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)apksigner"
+          "$apksigner" verify --print-certs app/build/outputs/apk/release/app-release.apk | tee certs.txt
+          if ! grep -q "SHA-256 digest: $RELEASE_CERT_SHA256" certs.txt; then
+            echo "::error::The APK is not signed with the SigNull? release key, so it could not update installed copies"
+            exit 1
+          fi
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          apk="SigNull-$GITHUB_REF_NAME.apk"
+          cp app/build/outputs/apk/release/app-release.apk "$apk"
+          notes=".github/release-notes/$GITHUB_REF_NAME.md"
+          if [ -f "$notes" ]; then set -- --notes-file "$notes"; else set -- --generate-notes; fi
+          gh release create "$GITHUB_REF_NAME" "$apk" --title "SigNull? ${GITHUB_REF_NAME#v}" "$@"

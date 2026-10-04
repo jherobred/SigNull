@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Splash: the tile pops in, the bars rise one by one, then the question mark lands. -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="288dp"
+            android:height="288dp"
+            android:viewportWidth="108"
+            android:viewportHeight="108">
+            <group
+                android:name="tile"
+                android:pivotX="54"
+                android:pivotY="54"
+                android:scaleX="0"
+                android:scaleY="0">
+                <path android:pathData="M39,26 H69 A13,13 0 0 1 82,39 V69 A13,13 0 0 1 69,82 H39 A13,13 0 0 1 26,69 V39 A13,13 0 0 1 39,26 Z">
+                    <aapt:attr name="android:fillColor">
+                        <gradient
+                            android:endX="82"
+                            android:endY="82"
+                            android:startX="26"
+                            android:startY="26"
+                            android:type="linear">
+                            <item android:color="#FF4C8DFF" android:offset="0" />
+                            <item android:color="#FF2B44D6" android:offset="1" />
+                        </gradient>
+                    </aapt:attr>
+                </path>
+            </group>
+            <group
+                android:scaleX="0.054"
+                android:scaleY="0.054"
+                android:translateX="26.352"
+                android:translateY="26.568">
+                <group
+                    android:name="bar1"
+                    android:pivotX="210"
+                    android:pivotY="760"
+                    android:scaleY="0">
+                    <path
+                        android:fillColor="#FFFF6F61"
+                        android:pathData="M158,662 A52,52 0 0 1 262,662 V708 A52,52 0 0 1 158,708 Z" />
+                </group>
+                <group
+                    android:name="bar2"
+                    android:pivotX="350"
+                    android:pivotY="760"
+                    android:scaleY="0">
+                    <path
+                        android:fillColor="#FFFFC94A"
+                        android:pathData="M298,542 A52,52 0 0 1 402,542 V708 A52,52 0 0 1 298,708 Z" />
+                </group>
+                <group
+                    android:name="bar3"
+                    android:pivotX="490"
+                    android:pivotY="760"
+                    android:scaleY="0">
+                    <path
+                        android:fillColor="#FF4ADE80"
+                        android:pathData="M438,422 A52,52 0 0 1 542,422 V708 A52,52 0 0 1 438,708 Z" />
+                </group>
+                <group
+                    android:name="question"
+                    android:pivotX="722"
+                    android:pivotY="760"
+                    android:scaleX="0"
+                    android:scaleY="0">
+                    <path
+                        android:pathData="M623.5,417.4 A100,100 0 1 1 772,486.6 Q722,520 722,578 V600"
+                        android:strokeColor="#FFFFFFFF"
+                        android:strokeLineCap="round"
+                        android:strokeLineJoin="round"
+                        android:strokeWidth="88" />
+                    <path
+                        android:fillColor="#FFFFFFFF"
+                        android:pathData="M674,712 A48,48 0 1 0 770,712 A48,48 0 1 0 674,712 Z" />
+                </group>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="tile">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:duration="300"
+                    android:interpolator="@android:anim/overshoot_interpolator"
+                    android:propertyName="scaleX"
+                    android:startOffset="0"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+                <objectAnimator
+                    android:duration="300"
+                    android:interpolator="@android:anim/overshoot_interpolator"
+                    android:propertyName="scaleY"
+                    android:startOffset="0"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="bar1">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:duration="300"
+                    android:interpolator="@android:anim/overshoot_interpolator"
+                    android:propertyName="scaleY"
+                    android:startOffset="180"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="bar2">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:duration="300"
+                    android:interpolator="@android:anim/overshoot_interpolator"
+                    android:propertyName="scaleY"
+                    android:startOffset="280"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="bar3">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:duration="300"
+                    android:interpolator="@android:anim/overshoot_interpolator"
+                    android:propertyName="scaleY"
+                    android:startOffset="380"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="question">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:duration="300"
+                    android:interpolator="@android:anim/overshoot_interpolator"
+                    android:propertyName="scaleX"
+                    android:startOffset="500"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+                <objectAnimator
+                    android:duration="300"
+                    android:interpolator="@android:anim/overshoot_interpolator"
+                    android:propertyName="scaleY"
+                    android:startOffset="500"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

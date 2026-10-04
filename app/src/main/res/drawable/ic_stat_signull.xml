@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Notification icon: the mark as a white silhouette. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <group
+        android:scaleX="0.0282"
+        android:scaleY="0.0282"
+        android:translateX="-2.438"
+        android:translateY="-2.326">
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M158,662 A52,52 0 0 1 262,662 V708 A52,52 0 0 1 158,708 Z" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M298,542 A52,52 0 0 1 402,542 V708 A52,52 0 0 1 298,708 Z" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M438,422 A52,52 0 0 1 542,422 V708 A52,52 0 0 1 438,708 Z" />
+        <path
+            android:pathData="M623.5,417.4 A100,100 0 1 1 772,486.6 Q722,520 722,578 V600"
+            android:strokeColor="#FFFFFFFF"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:strokeWidth="88" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M674,712 A48,48 0 1 0 770,712 A48,48 0 1 0 674,712 Z" />
+    </group>
+</vector>

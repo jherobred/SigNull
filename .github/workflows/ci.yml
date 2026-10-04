@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Unit tests, lint, debug and release APKs
+        run: |
+          chmod +x gradlew
+          ./gradlew testDebugUnitTest lintDebug assembleDebug assembleRelease
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: signull-apk
+          path: app/build/outputs/apk/release/*.apk
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: reports
+          path: app/build/reports/
